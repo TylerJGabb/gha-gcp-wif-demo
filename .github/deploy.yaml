@@ -1,0 +1,25 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: "read"
+  id-token: "write"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v3"
+      - id: "auth"
+        name: "Authenticate to GCP"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: projects/744401484278/locations/global/workloadIdentityPools/tylers-pool-for-gha/providers/github
+          service_account: robot-876@fine-citadel-361019.iam.gserviceaccount.com
+          create_credentials_file: true
+
+      - name: Test gcloud auth
+        run: gcloud projects list
