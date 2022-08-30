@@ -32,3 +32,8 @@ jobs:
 
       - name: Test firebase auth
         run: firebase -P fine-citadel-361019 functions:list
+
+      - run: npm --prefix=functions install
+
+      - name: Firebase Deploy
+        run: firebase -P fine-citadel-361019 deploy --only=functions -f
